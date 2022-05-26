@@ -22,14 +22,14 @@ const sampleRecipes = [
     instructions: '1.put salt on chicken \n2.put chicken in oven \n3.eat chicken'
   },
   {
-    id: 1,
+    id: 2,
     name: 'plain fish',
     servings: 4,
     cookTime: '45',
     instructions: '1.put salt on fish \n2.put fish in oven \n3.eat fish'
   },
   {
-    id: 1,
+    id: 3,
     name: 'plain beef',
     servings: 3,
     cookTime: '30',
