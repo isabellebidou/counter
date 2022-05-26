@@ -3,6 +3,7 @@ import React, { useState } from "react";
 //import Counter from "./Counter";
 //import CounterHooks from "./CounterHooks";
 import RecipeList from "./RecipeList";
+import '../css/app.css'
 export const ThemeContext = React.createContext()
 
 function App() {
