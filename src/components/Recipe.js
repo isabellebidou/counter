@@ -9,37 +9,33 @@ export default function Recipe(props) {
         instructions,
         ingredients
     } = props
-  return (
-    <div>
-        <div>
-            <h3>{name}
-            </h3>
+    return (
+        <div className="recipe">
+          <div className="recipe__header">
+            <h3 className="recipe__title">{name}</h3>
             <div>
-                <button>edit</button>
-                <button>delete</button>
+              <button className="btn btn--primary mr-1">Edit</button>
+              <button className="btn btn--danger">Delete</button>
             </div>
-            <div>
-                <span>cook time:</span>
-                <span>{cookTime}</span>
+          </div>
+          <div className="recipe__row">
+            <span className="recipe__label">Cook Time:</span>
+            <span className="recipe__value">{cookTime}</span>
+          </div>
+          <div className="recipe__row">
+            <span className="recipe__label">Servings:</span>
+            <span className="recipe__value">{servings}</span>
+          </div>
+          <div className="recipe__row">
+            <span className="recipe__label">Instructions:</span>
+            <div className="recipe__value recipe__instructions recipe__value--indented">{instructions}</div>
+          </div>
+          <div className="recipe__row">
+            <span className="recipe__label">Ingredients:</span>
+            <div className="recipe__value recipe__value--indented">
+              <IngredientList ingredients={ingredients} />
             </div>
-            <div>
-                <span>servings:</span>
-                <span>{servings}</span>
-            </div>
-            <div>
-                <span>instructions</span>
-                <div>
-                    {instructions}
-                </div>
-            </div>
-            <div>
-            <span>ingredients</span>
-            <div>
-                <IngredientList ingredients = {ingredients}/>
-            </div>
+          </div>
         </div>
-        </div>
-      
-    </div>
-  )
+      )
 }
