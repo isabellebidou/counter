@@ -1,76 +1,81 @@
-
-import React, { useState } from "react";
-//import Counter from "./Counter";
-//import CounterHooks from "./CounterHooks";
-import RecipeList from "./RecipeList";
+import React, { useState } from 'react';
+import RecipeList from './RecipeList'
 import '../css/app.css'
-export const ThemeContext = React.createContext()
+import uuidv4 from 'uuid/v4'
+export const RecipeContext = React.createContext()
 
 function App() {
- // const [theme, setTheme] = useState('red')
-  return ( 
-    <RecipeList recipes = {sampleRecipes}/>
+  const [recipes, setRecipes] = useState(sampleRecipes)
+  const recipeContextValue = {
+    handleRecipeAdd,
+    handleRecipeDelete
+  }
+
+  function handleRecipeAdd() {
+    const newRecipe = {
+      id: uuidv4(),
+      name: 'New',
+      servings: 1,
+      cookTime: '1:00',
+      instructions: 'Instr.',
+      ingredients: [
+        { id: uuidv4(), name: 'Name', amount: '1 Tbs' }
+      ]
+    }
+  
+    setRecipes([...recipes, newRecipe])
+  }
+
+  function handleRecipeDelete(id) {
+    setRecipes(recipes.filter(recipe => recipe.id !== id))
+  }
+
+  return (
+    <RecipeContext.Provider value={recipeContextValue}>
+      <RecipeList recipes={recipes}/>
+    </RecipeContext.Provider>
     
   )
-    
 }
+
 const sampleRecipes = [
   {
     id: 1,
-    name: 'plain chicken',
-    servings: 6,
-    cookTime: '60',
-    instructions: '1.put salt on chicken \n2.put chicken in oven \n3.eat chicken',
+    name: 'Plain Chicken',
+    servings: 3,
+    cookTime: '1:45',
+    instructions: "1. Put salt on chicken\n2. Put chicken in oven\n3. Eat chicken",
     ingredients: [
       {
-      id: 1,
-      name: 'chicken',
-      amount: '2pounds'
+        id: 1,
+        name: 'Chicken',
+        amount: '2 Pounds'
       },
       {
         id: 2,
-        name: 'salt',
-        amount: '1ts'
-        }
+        name: 'Salt',
+        amount: '1 Tbs'
+      }
     ]
   },
   {
     id: 2,
-    name: 'plain fish',
-    servings: 4,
-    cookTime: '45',
-    instructions: '1.put salt on fish \n2.put fish in oven \n3.eat fish',
+    name: 'Plain Pork',
+    servings: 5,
+    cookTime: '0:45',
+    instructions: "1. Put paprika on pork\n2. Put pork in oven\n3. Eat pork",
     ingredients: [
       {
-      id: 1,
-      name: 'fish',
-      amount: '3pounds'
+        id: 1,
+        name: 'Pork',
+        amount: '3 Pounds'
       },
       {
         id: 2,
-        name: 'salt',
-        amount: '1ts'
-        }
-      ]
-  },
-  {
-    id: 3,
-    name: 'plain beef',
-    servings: 3,
-    cookTime: '30',
-    instructions: '1.put salt on beef \n2.put beef in oven \n3.eat beef',
-    ingredients: [
-      {
-      id: 1,
-      name: 'beef',
-      amount: '3pounds'
-      },
-      {
-        id: 2,
-        name: 'salt',
-        amount: '2ts'
-        }
-      ]
+        name: 'Paprika',
+        amount: '2 Tbs'
+      }
+    ]
   }
 ]
 
