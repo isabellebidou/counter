@@ -19,7 +19,6 @@ function App() {
   })
   const selectedRecipe = recipes.find(recipe => recipe.id === selectedRecipeId)
 
-  console.log(selectedRecipe)
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(recipes))
   }, [recipes])
@@ -28,7 +27,8 @@ function App() {
   const recipeContextValue = {
     handleRecipeAdd,
     handleRecipeDelete,
-    handleRecipeSelect
+    handleRecipeSelect,
+    handleRecipeChange
   }
   function handleRecipeSelect(id){
     setSelectedRecipeId(id)
@@ -47,6 +47,12 @@ function App() {
     }
   
     setRecipes([...recipes, newRecipe])
+  }
+  function handleRecipeChange (id, recipe){
+    const newRecipes = [...recipes]
+    const index = newRecipes.findIndex(r => r.id === id)
+    newRecipes[index] = recipe
+    setRecipes(newRecipes)
   }
 
   function handleRecipeDelete(id) {
