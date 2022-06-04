@@ -1,3 +1,6 @@
+# training ex done while doing https://courses.webdevsimplified.com/view/courses/learn-react-today
+# hosted on https://papaya-gnome-e35861.netlify.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
