@@ -3,6 +3,7 @@ import RecipeList from './RecipeList'
 import '../css/app.css'
 import uuidv4 from 'uuid/v4'
 import RecipeEdit from './RecipeEdit';
+import SearchBox from './SearchBox';
 export const RecipeContext = React.createContext()
 const LOCAL_STORAGE_KEY = 'cookingWithReact.recipes'
 
@@ -17,6 +18,7 @@ function App() {
       return JSON.parse(recipeJSON)
     }
   })
+
   const selectedRecipe = recipes.find(recipe => recipe.id === selectedRecipeId)
 
   useEffect(() => {
@@ -28,7 +30,14 @@ function App() {
     handleRecipeAdd,
     handleRecipeDelete,
     handleRecipeSelect,
-    handleRecipeChange
+    handleRecipeChange,
+    handleRecipeSearch
+  }
+  function handleRecipeSearch (text) {
+    console.log(text)
+    setRecipes(recipes.filter(recipe => recipe.name.includes(text)))
+    //recipes.filter(recipe => recipe.name.includes(text))
+
   }
   function handleRecipeSelect(id){
     setSelectedRecipeId(id)
@@ -63,6 +72,7 @@ function App() {
 
   return (
     <RecipeContext.Provider value={recipeContextValue}>
+    <SearchBox></SearchBox>
       <RecipeList recipes={recipes}/>
       {selectedRecipe &&<RecipeEdit recipe = {selectedRecipe}/>}
     </RecipeContext.Provider>
