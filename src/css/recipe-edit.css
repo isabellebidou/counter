@@ -1,10 +1,10 @@
 .recipe-edit {
-    padding: 30px;
-    padding-top: 10px;
+  
+
     position: fixed;
     top: 0;
     right: 0;
-    width: 50%;
+    width: 48%;
     max-height: 100%;
     overflow-y: auto;
 
@@ -41,14 +41,14 @@
 textarea.recipe-edit__input {
     resize: none;
 }
-.recipe-edit__ingredient-grid {
+.recipe-edit__ingredient-grid, .recipe-edit__cook-grid {
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(3, auto);
     margin-top: 20px;
     margin-left: 40px;
 }
-.recipe-edit__add-ingredient-btn-container {
+.recipe-edit__add-ingredient-btn-container,.recipe-edit__add-cook-btn-container {
     margin-top: 20px;
     text-align:  center;
 }

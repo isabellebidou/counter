@@ -1,0 +1,13 @@
+.cook-grid {
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    row-gap: 5px;
+    column-gap: 40px;
+    justify-content: flex-start;
+
+}
+.cook__value {
+min-height: 100vh;
+width: 50%;
+padding-right: 20px;
+}

@@ -3,7 +3,6 @@ import RecipeList from './RecipeList'
 import '../css/app.css'
 import uuidv4 from 'uuid/v4'
 import RecipeEdit from './RecipeEdit';
-import SearchBox from './SearchBox';
 export const RecipeContext = React.createContext()
 const LOCAL_STORAGE_KEY = 'cookingWithReact.recipes'
 const LOCAL_STORAGE_SEARCH_KEY = 'cookingWithReact.search'
@@ -65,6 +64,9 @@ function App() {
       instructions: '',
       ingredients: [
         { id: uuidv4(), name: 'Name', amount: '' }
+      ],
+      cooks: [
+        { id: uuidv4(), name: 'Name' }
       ]
     }
     setSelectedRecipeId(newRecipe.id)
@@ -83,9 +85,11 @@ function App() {
     setRecipes(recipes.filter(recipe => recipe.id !== id))
   }
 
+ 
+
   return (
     <RecipeContext.Provider value={recipeContextValue}>
-    <SearchBox></SearchBox>
+    
       <RecipeList recipes={searchFilter && searchFilter !== ""?  filteredRecipes :recipes}/>
       {selectedRecipe &&<RecipeEdit recipe = {selectedRecipe}/>}
     </RecipeContext.Provider>
@@ -110,6 +114,14 @@ const sampleRecipes = [
         name: 'Salt',
         amount: '1 Tbs'
       }
+    ],
+    cooks: [
+      {
+        id: 2,
+        fname: 'Patricia',
+        lname: 'Bidou' 
+
+      }
     ]
   },
   {
@@ -129,6 +141,14 @@ const sampleRecipes = [
         name: 'Paprika',
         amount: '2 Tbs'
       }
+    ],
+    cooks: [
+      {
+        id: 1,
+        fname: 'Isabelle',
+        lname: 'Bidou' 
+      }
+      
     ]
   }
 ]
