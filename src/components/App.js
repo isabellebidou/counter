@@ -6,24 +6,40 @@ import RecipeEdit from './RecipeEdit';
 import SearchBox from './SearchBox';
 export const RecipeContext = React.createContext()
 const LOCAL_STORAGE_KEY = 'cookingWithReact.recipes'
+const LOCAL_STORAGE_SEARCH_KEY = 'cookingWithReact.search'
 
 function App() {
   const [selectedRecipeId, setSelectedRecipeId] = useState()
+  const [searchFilter, setSearchFilter] = useState (() => { 
+    const searchJSON = localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY)
+    if (searchJSON == null) {
+      return ''
+    } else {
+      console.log(JSON.parse(searchJSON))
+      return JSON.parse(searchJSON)
+    }
+  })
 
   const [recipes, setRecipes] = useState(() => { 
-    const recipeJSON = localStorage.getItem(LOCAL_STORAGE_KEY)
+  const recipeJSON = localStorage.getItem(LOCAL_STORAGE_KEY)
+
     if (recipeJSON == null) {
       return sampleRecipes
     } else {
-      return JSON.parse(recipeJSON)
+        return JSON.parse(recipeJSON)
     }
   })
 
   const selectedRecipe = recipes.find(recipe => recipe.id === selectedRecipeId)
+  const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(searchFilter.toLowerCase()))
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(recipes))
   }, [recipes])
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY,JSON.stringify(searchFilter))
+  }, [searchFilter])
+
 
   
   const recipeContextValue = {
@@ -34,10 +50,7 @@ function App() {
     handleRecipeSearch
   }
   function handleRecipeSearch (text) {
-    console.log(text)
-    setRecipes(recipes.filter(recipe => recipe.name.includes(text)))
-    //recipes.filter(recipe => recipe.name.includes(text))
-
+    setSearchFilter(text)
   }
   function handleRecipeSelect(id){
     setSelectedRecipeId(id)
@@ -73,10 +86,9 @@ function App() {
   return (
     <RecipeContext.Provider value={recipeContextValue}>
     <SearchBox></SearchBox>
-      <RecipeList recipes={recipes}/>
+      <RecipeList recipes={searchFilter && searchFilter !== ""?  filteredRecipes :recipes}/>
       {selectedRecipe &&<RecipeEdit recipe = {selectedRecipe}/>}
     </RecipeContext.Provider>
-    
   )
 }
 
