@@ -6,11 +6,11 @@ export default function RecipeCookEdit(props) {
         handleCookChange,
         handleCookDelete
       } = props
-
       function handleChange(changes) {
         handleCookChange(cook.id, {...cook, ...changes})
     
     }
+
     return (
         <>
             <input 

@@ -32,15 +32,27 @@ export default function RecipeEdit({ recipe }) {
   }
   function handleCookChange(id, cook) {
     const newCooks = [...recipe.cooks]
-    const index = newCooks.findIndex(i => i.id === id)
+    const index = newCooks.findIndex(c => c.id === id)
     newCooks[index] = cook
     handleChange({ cooks: newCooks })
   }
+
   function handleCookAdd () {
+      console.log('handkecookadd')
+      const newCook= {
+        id: uuidv4(),
+        fname:'',
+        lname: ''
+    }
+    handleChange({cooks: [...recipe.cooks, newCook]})
 
   }
 
-  function handleCookDelete () {
+  function handleCookDelete (id) {
+    console.log('handkecookdelete')
+    handleChange({
+      cooks: recipe.cooks.filter(c => c.id !== id)
+  })
     
   }
 
