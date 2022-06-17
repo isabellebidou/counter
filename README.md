@@ -1,5 +1,5 @@
 # training ex done while doing https://courses.webdevsimplified.com/view/courses/learn-react-today
-# hosted on https://papaya-gnome-e35861.netlify.app/
+# hosted on https://628fb471cc96f1254fbbb7e5--papaya-gnome-e35861.netlify.app/
 
 # Getting Started with Create React App
 

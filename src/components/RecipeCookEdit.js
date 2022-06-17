@@ -7,6 +7,7 @@ export default function RecipeCookEdit(props) {
         handleCookDelete
       } = props
       function handleChange(changes) {
+        console.log(changes)
         handleCookChange(cook.id, {...cook, ...changes})
     
     }

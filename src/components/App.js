@@ -3,12 +3,14 @@ import RecipeList from './RecipeList'
 import '../css/app.css'
 import uuidv4 from 'uuid/v4'
 import RecipeEdit from './RecipeEdit';
+import axios from 'axios';
 export const RecipeContext = React.createContext()
 const LOCAL_STORAGE_KEY = 'cookingWithReact.recipes'
 const LOCAL_STORAGE_SEARCH_KEY = 'cookingWithReact.search'
 
 function App() {
   const [selectedRecipeId, setSelectedRecipeId] = useState()
+
   const [searchFilter, setSearchFilter] = useState (() => { 
     const searchJSON = localStorage.getItem(LOCAL_STORAGE_SEARCH_KEY)
     if (searchJSON == null) {
@@ -18,29 +20,25 @@ function App() {
       return JSON.parse(searchJSON)
     }
   })
-
-  const [recipes, setRecipes] = useState(() => { 
-  const recipeJSON = localStorage.getItem(LOCAL_STORAGE_KEY)
-
-    if (recipeJSON == null) {
-      return sampleRecipes
-    } else {
-        return JSON.parse(recipeJSON)
-    }
+    const [recipes, setRecipes] = useState([] )
+useEffect(()=> {
+  axios('/api')
+  .then(response => setRecipes(response.data))
+  .catch(function (error) {
+    setRecipes(sampleRecipes)
+    console.log(error);
   })
-
-  const selectedRecipe = recipes.find(recipe => recipe.id === selectedRecipeId)
-  const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(searchFilter.toLowerCase()))
-
+},[])
+  
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(recipes))
   }, [recipes])
+ 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_SEARCH_KEY,JSON.stringify(searchFilter))
   }, [searchFilter])
 
 
-  
   const recipeContextValue = {
     handleRecipeAdd,
     handleRecipeDelete,
@@ -84,16 +82,19 @@ function App() {
     setSelectedRecipeId(undefined)
     setRecipes(recipes.filter(recipe => recipe.id !== id))
   }
-
- 
-
-  return (
-    <RecipeContext.Provider value={recipeContextValue}>
+  const selectedRecipe = recipes.find(recipe => recipe.id === selectedRecipeId)
+      const filteredRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(searchFilter.toLowerCase()))
     
-      <RecipeList recipes={searchFilter && searchFilter !== ""?  filteredRecipes :recipes}/>
-      {selectedRecipe &&<RecipeEdit recipe = {selectedRecipe}/>}
-    </RecipeContext.Provider>
-  )
+    
+      return (
+        <RecipeContext.Provider value={recipeContextValue}>
+        
+          <RecipeList recipes={searchFilter && searchFilter !== ""?  filteredRecipes :recipes}/>
+          {selectedRecipe &&<RecipeEdit recipe = {selectedRecipe}/>}
+        </RecipeContext.Provider>
+      )
+
+
 }
 
 const sampleRecipes = [
